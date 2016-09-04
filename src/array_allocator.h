@@ -35,6 +35,9 @@ public:
 
     size_type max_size() const throw() {return size;}
     template<class U> struct rebind {typedef array_allocator<U, size> other;};
+
+	template<class U> bool operator==(const array_allocator<U, size>&) const noexcept { return true; }
+	template<class U> bool operator!=(const array_allocator<U, size>&) const noexcept { return false; }
 };
 
 template<class T, size_t size> struct array_vector : std::vector<T, array_allocator<T, size> > {

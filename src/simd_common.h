@@ -15,11 +15,7 @@
   #define __inline __forceinline  // GCC needs to force inlining of intrinsics functions
 #endif
 
-#include <mmintrin.h>
-#include <xmmintrin.h>
-#ifdef __SSE2__
-  #include <emmintrin.h>
-#endif
+#include "simd_intrinsics.h"
 
 #ifdef __GNUC__
  #undef __inline

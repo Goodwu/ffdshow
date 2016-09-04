@@ -17,6 +17,11 @@
 #define always_inline __forceinline
 #define av_always_inline __forceinline
 
+// Recent versions of MSVC don't define MMX intrinsics on x64.
+// We also need to include it before another MSVC header includes it,
+// since it only be included once due to `#pragma once`.
+#include "simd_intrinsics.h"
+
 // Windows Header Files:
 #include <windows.h>
 #include <windowsx.h>
@@ -46,6 +51,7 @@
 #include <algorithm>
 #include <map>
 #include <list>
+#define _SILENCE_STDEXT_HASH_DEPRECATION_WARNINGS
 #include <hash_map>
 #include <utility>
 #include <limits>
@@ -81,7 +87,7 @@
 //#define OSDTIMETABALE // OSD debug item "Time table" to reserch multithread time table. if you don't need this item comment out.
 //#define OSD_H264POC
 
-#include "stdint.h" // ISO C9x  compliant stdint.h for Microsoft Visual Studio
+#include <stdint.h>
 #include "inttypes.h" // ISO C9x  compliant inttypes.h for Microsoft Visual Studio
 #include "dwstring.h"
 #include "mem_align.h"

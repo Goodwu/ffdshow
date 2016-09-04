@@ -84,8 +84,9 @@ public:
     void show(void), hide(void);
     int cfgGet(int id), cfgSet(int id, int val);
     template<class Ttray> static unsigned int __stdcall start(TtrayIconStartData *sd) {
-#if defined(_MSC_VER) && (_MSC_VER == 1600)
-        return (new Ttray(std::get<0>(*sd)))->run(std::get<1>(*sd), std::get<2>(*sd));
+#if defined(_MSC_VER) && (_MSC_VER >= 1600)
+		std::tuple<IffdshowBase*, CAMEvent*, HWND*> &t = *sd;
+        return (new Ttray(std::get<0>(t)))->run(std::get<1>(t), std::get<2>(t));
 #else
         return (new Ttray(sd->get<1>()))->run(sd->get<2>(), sd->get<3>());
 #endif

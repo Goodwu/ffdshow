@@ -2263,7 +2263,7 @@ void TffdshowDecVideo::getChapters(void)
                     //strcpy(fMarkerName, markerName);
                     long markerTimeL = (long)markerTime;
                     //chaptersList[markerTimeL]=fMarkerName;
-                    std::pair<long, ffstring> pair = std::make_pair<long, ffstring>(markerTimeL, markerName);
+                    std::pair<long, ffstring> pair = std::make_pair(markerTimeL, markerName);
                     chaptersList.push_back(pair);
                     SysFreeString(markerName);
                 } else {
@@ -2274,7 +2274,7 @@ void TffdshowDecVideo::getChapters(void)
                     ss = (int)(markerTime - hh * 3600 - mm * 60);
                     tsprintf(time_str, _l("%02i:%02i:%02"), hh, mm, ss);
                     long markerTimeL = (long)markerTime;
-                    std::pair<long, ffstring> pair = std::make_pair<long, ffstring>(markerTimeL, time_str);
+                    std::pair<long, ffstring> pair = std::make_pair(markerTimeL, time_str);
                     chaptersList.push_back(pair);
                     //chaptersList[markerTimeL] = time_str;
                 }

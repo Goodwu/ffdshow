@@ -32,7 +32,7 @@
 #include "Tmuxer.h"
 #include "Tinfo.h"
 #include "Tconvert.h"
-#include <mmintrin.h>
+#include "simd_common.h"
 #include "TfakeImediaSample.h"
 
 STDMETHODIMP_(int) TffdshowEnc::getVersion2(void)

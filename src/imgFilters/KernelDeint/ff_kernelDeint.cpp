@@ -2547,6 +2547,6 @@ extern "C" IkernelDeint* createI(bool IisYV12, unsigned int width, unsigned int 
 
 extern "C" void __stdcall getVersion(char *ver, const char* *license)
 {
-    strcpy(ver, "1.5.4, "COMPILER COMPILER_X64 COMPILER_INFO" ("__DATE__" "__TIME__")");
+    strcpy(ver, "1.5.4, " COMPILER COMPILER_X64 COMPILER_INFO " (" __DATE__ " " __TIME__ ")");
     *license = "Based on the original KernelDeint plugin (C) 2003 Donald A. Graft\nMMX optimizations + new motion mask code (C) 2004 Kurt B. Pruenner";
 }

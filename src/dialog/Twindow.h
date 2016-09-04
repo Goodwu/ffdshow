@@ -19,7 +19,7 @@ private:
     typedef std::tuple<Twindow*, int, bool> Tenable;
     static BOOL CALLBACK enableWindowsProc(HWND hwnd, LPARAM lParam) {
         Tenable *e = (Tenable*)lParam;
-#if defined(_MSC_VER) && (_MSC_VER == 1600)
+#if defined(_MSC_VER) && (_MSC_VER >= 1600)
         std::get<0>(*e)->enable2(hwnd, std::get<1>(*e), std::get<2>(*e));
 #else
         e->get<1>()->enable2(hwnd, e->get<2>(), e->get<3>());
@@ -503,7 +503,7 @@ public:
     bool wndEnabled;
     bool enable(void) {
         bool is = wndEnabled = enabled();
-#if defined(_MSC_VER) && (_MSC_VER == 1600)
+#if defined(_MSC_VER) && (_MSC_VER >= 1600)
         Tenable e(this, is, false);
 #else
         Tenable e(this, is);

@@ -623,22 +623,24 @@
 #define IDFF_visQuants          1204
 #define IDFF_visGraph           1205
 
-#define IDFF_filterAvisynth          1250
-#define IDFF_isAvisynth              1251
-#define IDFF_showAvisynth            1260
-#define IDFF_orderAvisynth           1252
-#define IDFF_fullAvisynth            1253
-#define IDFF_avisynthFfdshowSource   1259
-#define IDFF_avisynthApplyPulldown   1261
-#define IDFF_avisynthInYV12          1255
-#define IDFF_avisynthInYUY2          1256
-#define IDFF_avisynthInRGB24         1257
-#define IDFF_avisynthInRGB32         1258
-#define IDFF_avisynthEnableBuffering 1262
-#define IDFF_avisynthBufferAhead     1263
-#define IDFF_avisynthBufferBack      1264
-#define IDFF_avisynthScript          1254 // Use this if you want to manipulate the setting through external API.
-#define IDFF_avisynthScriptMULTI_SZ  1265 // Used to save data. If both IDFF_avisynthScript and IDFF_avisynthScriptMULTI_SZ exist, IDFF_avisynthScriptMULTI_SZ is used. If only one of these exists, the exsiting one is used.
+#define IDFF_filterAvisynth           1250
+#define IDFF_isAvisynth               1251
+#define IDFF_showAvisynth             1260
+#define IDFF_orderAvisynth            1252
+#define IDFF_fullAvisynth             1253
+#define IDFF_avisynthFfdshowSource    1259
+#define IDFF_avisynthApplyPulldown    1261
+#define IDFF_avisynthInYV12           1255
+#define IDFF_avisynthInYUY2           1256
+#define IDFF_avisynthInRGB24          1257
+#define IDFF_avisynthInRGB32          1258
+#define IDFF_avisynthEnableBuffering  1262
+#define IDFF_avisynthBufferAhead      1263
+#define IDFF_avisynthBufferBack       1264
+#define IDFF_avisynthScript           1254 // Use this if you want to manipulate the setting through external API.
+#define IDFF_avisynthScriptMULTI_SZ   1265 // Used to save data. If both IDFF_avisynthScript and IDFF_avisynthScriptMULTI_SZ exist, IDFF_avisynthScriptMULTI_SZ is used. If only one of these exists, the exsiting one is used.
+#define IDFF_avisynthResetOnSeek      1266 
+#define IDFF_avisynthPassFirstThrough 1267
 
 #define IDFF_filterOSD             3527
 #define IDFF_isOSD                 1501

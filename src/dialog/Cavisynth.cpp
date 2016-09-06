@@ -68,6 +68,8 @@ void TavisynthPage::cfg2dlg(void)
     setCheck(IDC_CHB_AVISYNTH_RGB32, cfgGet(IDFF_avisynthInRGB32));
     setCheck(IDC_CHB_AVISYNTH_RGB24, cfgGet(IDFF_avisynthInRGB24));
     setCheck(IDC_CHB_AVISYNTH_BUFFER, cfgGet(IDFF_avisynthEnableBuffering));
+    setCheck(IDC_CHB_AVISYNTH_RESETONSEEK, cfgGet(IDFF_avisynthResetOnSeek));
+    setCheck(IDC_CHB_AVISYNTH_PASSFIRSTTHROUGH, cfgGet(IDFF_avisynthPassFirstThrough));
     SetDlgItemInt(m_hwnd, IDC_ED_AVISYNTH_BUF_BACK, cfgGet(IDFF_avisynthBufferBack), false);
     SetDlgItemInt(m_hwnd, IDC_ED_AVISYNTH_BUF_AHEAD, cfgGet(IDFF_avisynthBufferAhead), false);
     setDlgItemText(m_hwnd, IDC_ED_AVISYNTH, cfgGetStr(IDFF_avisynthScript));
@@ -195,6 +197,8 @@ TavisynthPage::TavisynthPage(TffdshowPageDec *Iparent, const TfilterIDFF *idff):
         IDC_CHB_AVISYNTH_RGB32, IDFF_avisynthInRGB32, NULL,
         IDC_CHB_AVISYNTH_RGB24, IDFF_avisynthInRGB24, NULL,
         IDC_CHB_AVISYNTH_BUFFER, IDFF_avisynthEnableBuffering, NULL,
+        IDC_CHB_AVISYNTH_RESETONSEEK, IDFF_avisynthResetOnSeek, NULL,
+        IDC_CHB_AVISYNTH_PASSFIRSTTHROUGH, IDFF_avisynthPassFirstThrough, NULL,
         0, NULL, NULL
     };
     bindCheckboxes(chb);

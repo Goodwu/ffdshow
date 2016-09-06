@@ -175,7 +175,7 @@ int TimgFilterAvisynth::findBuffer(TframeBuffer* buffers, int numBuffers, int n)
     // Find the index of the buffer that's framenumber is closest (or equal to) n
 
     int minDistance=MAX_INT;
-    int bestBufferNo=0;
+    int bestBufferNo=-1;
 
     if (buffers && numBuffers > 1)
         for (int bufferNo=0; bufferNo < numBuffers; bufferNo++) {
@@ -226,14 +226,18 @@ AVS_VideoFrame* AVSC_CC TimgFilterAvisynth::Tffdshow_source::get_frame(AVS_Filte
     // Find the buffered frame that's closest to n and return it
 
     if (input->numBuffers > 0) {
-        TframeBuffer& buffer=input->buffers[findBuffer(input->buffers,input->numBuffers,n)];
+        int bufferNo = findBuffer(input->buffers, input->numBuffers, n);
 
-        if (debugPrint) {
-            DPRINTF(_l("TimgFilterAvisynth: Looked up frame %i, using frame %i"),n,buffer.frameNo);
-        }
+        if (bufferNo >= 0) {
+            TframeBuffer& buffer = input->buffers[bufferNo];
 
-        if (buffer.frame) {
-            return input->env->avs_copy_video_frame(buffer.frame);
+            if (debugPrint) {
+                DPRINTF(_l("TimgFilterAvisynth: Looked up frame %i, using frame %i"), n, buffer.frameNo);
+            }
+
+            if (buffer.frame) {
+                return input->env->avs_copy_video_frame(buffer.frame);
+            }
         }
     }
 
@@ -432,6 +436,16 @@ void TimgFilterAvisynth::Tavisynth::setOutFmt(const TavisynthSettings *cfg,Tinpu
     }
 }
 
+void TimgFilterAvisynth::Tavisynth::reset()
+{
+        if (buffers) {
+            for (int bufNo = 0; bufNo < numBuffers + (applyPulldown > 0 ? 1 : 0); bufNo++) {
+                buffers[bufNo].frameNo = -1;
+                buffers[bufNo].ReleaseFrame();
+            }
+        }
+}
+
 void TimgFilterAvisynth::Tavisynth::skipAhead(bool passFirstThrough, bool clearLastOutStopTime)
 {
     // Skip ahead at least 1000 frames to make sure AviSynth doesn't use buffered frames,
@@ -439,7 +453,7 @@ void TimgFilterAvisynth::Tavisynth::skipAhead(bool passFirstThrough, bool clearL
     // different framenumbers stays the same
     // (Don't skip if buffering is turned off, though...)
 
-    int skippedFrames=(numBuffers > (applyPulldown == 1 ? 2 : 1) ? 1000 : 0);
+    int skippedFrames = (numBuffers > (applyPulldown == 1 ? 2 : 1) ? 1000 : 0);
     REFERENCE_TIME roundToLong=frameScaleNum*frameScaleNum*frameScaleDen;
     int roundTo=(int)(roundToLong > NUM_FRAMES ? NUM_FRAMES : roundToLong);
 
@@ -496,6 +510,8 @@ void TimgFilterAvisynth::Tavisynth::init(const TavisynthSettings &oldcfg, Tinput
         enableBuffering=!!oldcfg.enableBuffering;
         bufferAhead=(enableBuffering ? oldcfg.bufferAhead : 0);
         bufferBack=(enableBuffering ? oldcfg.bufferBack : 0);
+
+        passFirstThrough = !!oldcfg.passFirstThrough;
 
         if (bufferAhead == 0 && bufferBack == 0) {
             enableBuffering=false;
@@ -849,8 +865,6 @@ HRESULT TimgFilterAvisynth::Tavisynth::process(TimgFilterAvisynth *self,TfilterQ
         if (curOutScaledFrameNo == targetOutScaledFrameNo || finalBuffer) {
             if (finalBuffer) {
                 skipAhead(false,false);
-
-                passFirstThrough=false;
                 passLastThrough=false;
                 ignoreAheadValue=true;
             }
@@ -1106,7 +1120,7 @@ void TimgFilterAvisynth::onSizeChange(void)
         DPRINTF(_l("TimgFilterAvisynth: onSizeChange"));
     }
 
-    oldcfg.script[0]='\0';
+    reset();
 }
 
 void TimgFilterAvisynth::onSeek(void)
@@ -1116,7 +1130,12 @@ void TimgFilterAvisynth::onSeek(void)
     }
 
     if (avisynth) {
-        avisynth->skipAhead(false,true);
+        if (!!oldcfg.resetOnSeek) {
+            avisynth->reset();
+        }
+        else {
+            avisynth->skipAhead(false, true);
+        }
     }
 }
 
@@ -1127,7 +1146,12 @@ void TimgFilterAvisynth::onFlush(void)
     }
 
     if (avisynth) {
-        avisynth->skipAhead(false,true);
+       if (!!oldcfg.resetOnSeek) {
+            avisynth->reset();
+        }
+        else {
+            avisynth->skipAhead(false, true);
+        }
     }
 }
 
@@ -1138,11 +1162,16 @@ void TimgFilterAvisynth::onStop(void)
     }
 
     if (avisynth) {
-        avisynth->skipAhead(false,true);
+        if (!!oldcfg.resetOnSeek) {
+            avisynth->reset();
+        }
+        else {
+            avisynth->skipAhead(false, true);
+        }
     }
 }
 
-void TimgFilterAvisynth::reset(void)
+void TimgFilterAvisynth::reset()
 {
     if (debugPrint) {
         DPRINTF(_l("TimgFilterAvisynth: reset"));

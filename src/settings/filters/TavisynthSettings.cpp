@@ -65,6 +65,10 @@ TavisynthSettings::TavisynthSettings(TintStrColl *Icoll, TfilterIDFFs *filters):
         _l("avisynthBufferAhead"), 10,
         IDFF_avisynthBufferBack       , &TavisynthSettings::bufferBack      , 0, 99, _l(""), 1,
         _l("avisynthBufferBack"), 10,
+        IDFF_avisynthResetOnSeek      , &TavisynthSettings::resetOnSeek     , 0, 0, _l(""), 1,
+        _l("avisynthResetOnSeek"), 1,
+        IDFF_avisynthPassFirstThrough , &TavisynthSettings::passFirstThrough, 0, 0, _l(""), 1,
+        _l("avisynthPassFirstThrough"), 0,
         0
     };
     addOptions(iopts);
@@ -118,6 +122,6 @@ void TavisynthSettings::createPages(TffdshowPageDec *parent) const
 
 const int* TavisynthSettings::getResets(unsigned int pageId)
 {
-    static const int idResets[] = {IDFF_avisynthInYV12, IDFF_avisynthInYUY2, IDFF_avisynthInRGB24, IDFF_avisynthInRGB32, IDFF_avisynthFfdshowSource, IDFF_avisynthBufferAhead, IDFF_avisynthBufferBack, IDFF_avisynthApplyPulldown, IDFF_avisynthEnableBuffering, 0};
+    static const int idResets[] = {IDFF_avisynthInYV12, IDFF_avisynthInYUY2, IDFF_avisynthInRGB24, IDFF_avisynthInRGB32, IDFF_avisynthFfdshowSource, IDFF_avisynthBufferAhead, IDFF_avisynthBufferBack, IDFF_avisynthApplyPulldown, IDFF_avisynthEnableBuffering, IDFF_avisynthResetOnSeek, IDFF_avisynthPassFirstThrough, 0};
     return idResets;
 }

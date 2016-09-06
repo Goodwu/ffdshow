@@ -22,6 +22,9 @@ public:
     int enableBuffering;
     int bufferAhead;
     int bufferBack;
+    int resetOnSeek;
+    int passFirstThrough;
+
     char_t script[MAX_AVISYNTH_SCRIPT_LENGTH];
     char_t scriptMULTI_SZ[MAX_AVISYNTH_SCRIPT_LENGTH];
 

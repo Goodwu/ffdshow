@@ -143,6 +143,7 @@ public:
         done();
     }
 
+    void reset();
     void skipAhead(bool passFirstThrough, bool clearLastOutStopTime);
     void done(void);
     bool createClip(const TavisynthSettings *cfg,Tinput *input,TffPictBase& pict);
@@ -173,6 +174,8 @@ private:
     bool enableBuffering;
     int bufferAhead;
     int bufferBack;
+
+    bool resetOnSeek;
 
     int applyPulldown;
     bool hasPulldown;

@@ -147,6 +147,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <DisableSpecificWarnings>4996;4250;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <LoopUnrolling>4</LoopUnrolling>
+      <UseIntelOptimizedHeaders>true</UseIntelOptimizedHeaders>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>

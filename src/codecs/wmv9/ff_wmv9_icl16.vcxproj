@@ -108,6 +108,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <DisableSpecificWarnings>4996;4100;4127;4201;4005;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <UseIntelOptimizedHeaders>true</UseIntelOptimizedHeaders>
     </ClCompile>
     <Link>
       <ModuleDefinitionFile>ff_wmv9.def</ModuleDefinitionFile>
